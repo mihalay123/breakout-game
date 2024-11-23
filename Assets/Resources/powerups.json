@@ -1,0 +1,9 @@
+{
+  "powerUps": [
+    {
+      "name": "Ball Multiplier",
+      "prefabName": "MultiBall",
+      "spawnChance": 0.3
+    }
+  ]
+}
