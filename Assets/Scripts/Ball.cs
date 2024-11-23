@@ -3,13 +3,14 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public float initialSpeed = 300f;
-
+    public float constantSpeed = 5f;
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        LaunchBall();
+        rb.linearVelocity = new Vector2(Random.Range(-1f, 1f), Random.Range(0.5f, 1f)).normalized * constantSpeed;
+
     }
 
     void Update()
@@ -21,10 +22,19 @@ public class Ball : MonoBehaviour
         }
     }
 
-    void LaunchBall()
+    void FixedUpdate()
     {
-        Vector2 direction = new Vector2(Random.Range(-1f, 1f), 1).normalized;
-        rb.AddForce(direction * initialSpeed);
+        MaintainConstantSpeed();
+    }
+
+    private void MaintainConstantSpeed()
+    {
+        Debug.Log($"Maintaining constant speed {rb.linearVelocity.magnitude}");
+        if (rb.linearVelocity.magnitude != 0)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * constantSpeed;
+        }
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
